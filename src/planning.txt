@@ -1,0 +1,32 @@
+STEPS TO FOLLOW FOR A SUCCESSFUL WEATHER APP
+
+STEP 1
+create components that i will need for the application
+-weatherDisplay for the current weather 
+-LocationSearch for searching and selecting the location i want to check
+-WeatherAlerts for displaying weather Weather alerts
+-LocationList for when i want to select multiple locations and see them at the same time
+-Themes (dark and Light mode)
+
+STEP 2
+UI design must be intuitive 
+Responsiveness and mobile friendly 
+
+Step 3
+components to display weather conditions, with options to toggle between daily and hourly forecasts.
+Use icons and visuals to represent different weather conditions.
+
+Step 4
+users should be able to search for and save multiple locations.
+Provide a list of saved locations for quick access.
+Provide options for users to customize the app's theme and temperature units.
+
+Step 5
+Integrate with a weather API to fetch current weather conditions 
+temperature,wind speed,precipitation,humidity should be displayed 
+input field that allow the search of a location and the fetching of weather data for those locations should be provided 
+weather alerts to be fetched from the Api and display them
+store location data locally 
+
+
+other steps to follow 
