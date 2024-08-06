@@ -2,25 +2,26 @@ import React from 'react';
 import './SavedLocation.css';
 
 const SavedLocations = ({ savedLocations, setSavedLocations }) => {
-  const handleRemove = (locationName) => {
-    const updatedLocations = savedLocations.filter(loc => loc.name !== locationName);
-    setSavedLocations(updatedLocations);
-    localStorage.setItem('savedLocations', JSON.stringify(updatedLocations));
-  };
-
   return (
     <div>
       <h2>Saved Locations</h2>
       <div className="saved-locations-container">
-        {savedLocations.map((location, index) => (
-          <div className="card" key={index}>
-            <h3>{location.name}</h3>
-            <p>Temperature: {location.weather.current.temp_c}°C</p>
-            <p>Humidity: {location.weather.current.humidity}%</p>
-            <p>Wind Speed: {location.weather.current.wind_kph} kph</p>
-            <button onClick={() => handleRemove(location.name)}>Remove</button>
-          </div>
-        ))}
+        {savedLocations && savedLocations.length > 0 ? (
+          savedLocations.map((location, index) => (
+            <div key={index} className="weather-card">
+              {location && location.current && (
+                <>
+                  <h3>{location.name}</h3>
+                  <p>{location.current.temperature}°C</p>
+                  <p>{location.current.humidity}% Humidity</p>
+                  <p>{location.current.wind_speed} m/s Wind</p>
+                </>
+              )}
+            </div>
+          ))
+        ) : (
+          <p>No saved locations.</p>
+        )}
       </div>
     </div>
   );

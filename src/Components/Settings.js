@@ -1,4 +1,4 @@
-// src/pages/Settings.js
+
 import React, { useState } from 'react';
 
 const Settings = () => {
