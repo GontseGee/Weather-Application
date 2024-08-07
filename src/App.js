@@ -1,12 +1,10 @@
-
-import React,{useState} from 'react';
+// src/App.js
+import React, { useState } from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Home from './Components/Home';
-import SavedLocations from './Components/SavedLocations';
 import Navbar from './Components/Navbar';
 import Settings from './Components/Settings';
 import './App.css';
-
 
 const App = () => {
   const [savedLocations, setSavedLocations] = useState([]);
@@ -22,7 +20,6 @@ const App = () => {
         <Navbar />
         <Routes>
           <Route path="/" element={<Home savedLocations={savedLocations} setSavedLocations={setSavedLocations} />} />
-          <Route path="/saved" element={<SavedLocations savedLocations={savedLocations} setSavedLocations={setSavedLocations} />} />
           <Route path="/settings" element={<Settings isDarkMode={isDarkMode} toggleDarkMode={toggleDarkMode} />} />
         </Routes>
       </Router>

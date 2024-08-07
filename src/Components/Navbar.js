@@ -11,7 +11,7 @@ const Navbar = () => {
           <Link to="/">Home</Link>
         </li>
         <li className="navbar-item">
-          <Link to="/saved-locations">Saved Locations</Link>
+         
         </li>
         <li className="navbar-item">
           <Link to="/settings">Settings</Link>

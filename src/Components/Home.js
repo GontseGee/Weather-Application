@@ -1,5 +1,6 @@
+// src/Components/Home.js
 import React, { useState, useEffect } from 'react';
-import { fetchWeather,fetchHourlyForecast, fetchWeeklyForecast, fetchMonthlyForecast } from '../Services/WeatherApi';
+import { fetchWeather, fetchHourlyForecast, fetchWeeklyForecast, fetchMonthlyForecast } from '../Services/WeatherApi';
 
 import './Home.css';
 
@@ -17,12 +18,13 @@ const Home = ({ savedLocations, setSavedLocations }) => {
   const [searchTerm, setSearchTerm] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
-  const [view, setView] = useState('current'); // current, hourly, weekly, monthly
+  const [view, setView] = useState('current');
   const [notification, setNotification] = useState('');
 
   useEffect(() => {
     const saved = JSON.parse(localStorage.getItem('savedLocations'));
     if (saved) {
+      console.log('Loaded saved locations:', saved);
       setSavedLocations(saved);
     }
   }, [setSavedLocations]);
@@ -33,7 +35,7 @@ const Home = ({ savedLocations, setSavedLocations }) => {
     try {
       const weatherData = await fetchWeather(searchTerm);
       setWeather(weatherData);
-      const forecastData = await fetchHourlyForecast(searchTerm); // Default to hourly forecast
+      const forecastData = await fetchHourlyForecast(searchTerm); 
       setForecast(forecastData);
     } catch (error) {
       setError('Failed to fetch weather data.');
@@ -43,42 +45,40 @@ const Home = ({ savedLocations, setSavedLocations }) => {
   };
 
   const handleSave = () => {
-    if (!weather || !searchTerm) {
-      console.log(searchTerm)
-      setError('Weather data or search term is missing.');
-      return;
-    }
-
- 
-    const normalizedSearchTerm = searchTerm.trim().toLowerCase();
-
-
-    const isAlreadySaved = savedLocations.some((loc) => loc.name.toLowerCase() === normalizedSearchTerm);
-
-    if (isAlreadySaved) {
-      setError('Location is already saved.');
-      return;
-    }
-
-    
-    const newSavedLocations = [
-      ...savedLocations,
-      {
-        name: searchTerm,
-        current: {
-          temperature: weather.current.temp_c,
-          humidity: weather.current.humidity,
-          wind_speed: weather.current.wind_kph,
+    if (
+      weather &&
+      searchTerm &&
+      typeof searchTerm === 'string' &&
+      !savedLocations.some((loc) => loc.name.toLowerCase() === searchTerm.toLowerCase())
+    ) {
+      const newSavedLocations = [
+        ...savedLocations,
+        {
+          name: searchTerm,
+          weather: {
+            current: {
+              temp_c: weather.current.temp_c,
+              humidity: weather.current.humidity,
+              wind_kph: weather.current.wind_kph,
+            },
+          },
         },
-      },
-    ];
+      ];
+      setSavedLocations(newSavedLocations);
+      localStorage.setItem('savedLocations', JSON.stringify(newSavedLocations));
+      setNotification(`Location ${searchTerm} saved to Saved Locations.`);
+      setTimeout(() => {
+        setNotification('');
+      }, 3000);
+    } else {
+      setError('Location is already saved or weather data is missing.');
+    }
+  };
 
+  const handleDelete = (name) => {
+    const newSavedLocations = savedLocations.filter((location) => location.name !== name);
     setSavedLocations(newSavedLocations);
     localStorage.setItem('savedLocations', JSON.stringify(newSavedLocations));
-    setNotification(`Location ${searchTerm} saved to Saved Locations.`);
-    setTimeout(() => {
-      setNotification('');
-    }, 3000); // Clear notification after 3 seconds
   };
 
   const handleViewChange = async (viewType) => {
@@ -180,6 +180,24 @@ const Home = ({ savedLocations, setSavedLocations }) => {
           </div>
         </div>
       )}
+      <div className="saved-locations">
+        <h2>Saved Locations</h2>
+        {savedLocations && savedLocations.length > 0 ? (
+          savedLocations.map((location, index) => (
+            location.weather && location.weather.current ? (
+              <div key={index} className="weather-card">
+                <h3>{location.name}</h3>
+                <p>{getWeatherEmoji('Sunny')} Temperature: {location.weather.current.temp_c}°C</p>
+                <p>{getWeatherEmoji('Humidity')} Humidity: {location.weather.current.humidity}%</p>
+                <p>{getWeatherEmoji('Wind')} Wind Speed: {location.weather.current.wind_kph} kph</p>
+                <button onClick={() => handleDelete(location.name)}>Delete</button>
+              </div>
+            ) : null
+          ))
+        ) : (
+          <p>No saved locations.</p>
+        )}
+      </div>
     </div>
   );
 };

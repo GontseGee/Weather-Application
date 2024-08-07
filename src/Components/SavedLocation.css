@@ -1,31 +1,35 @@
-.saved-locations-container {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 20px;
-    padding: 20px;
-  }
-  
-  .card {
-    background-color: #f8f9fa;
-    border-radius: 8px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    padding: 20px;
-    text-align: center;
-    width: 200px;
-    transition: transform 0.3s ease-in-out;
-  }
-  
-  .card:hover {
-    transform: scale(1.05);
-  }
-  
-  .card h3 {
-    margin: 0 0 10px;
-    font-size: 1.2em;
-  }
-  
-  .card p {
-    margin: 5px 0;
-    font-size: 0.9em;
-    color: #333;
-  }
+
+.saved-locations {
+  padding: 20px;
+  font-family: Arial, sans-serif;
+}
+
+.weather-card {
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  padding: 10px;
+  margin-bottom: 10px;
+  background-color: #f9f9f9;
+}
+
+.weather-card h3 {
+  margin: 0;
+  font-size: 1.2em;
+}
+
+.weather-card p {
+  margin: 5px 0;
+}
+
+.notification {
+  background-color: #d4edda;
+  color: #155724;
+  padding: 10px;
+  border-radius: 5px;
+  margin: 10px 0;
+}
+
+.notification.error {
+  background-color: #f8d7da;
+  color: #721c24;
+}
