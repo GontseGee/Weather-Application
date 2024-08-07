@@ -163,18 +163,24 @@ const Home = ({ savedLocations, setSavedLocations }) => {
           <h2>{view.charAt(0).toUpperCase() + view.slice(1)} Forecast</h2>
           <div className="forecast-container">
             {view === 'hourly' && forecast.map((hour, index) => (
-              <div className="card" key={index}>
-                <p>{new Date(hour.time).toLocaleTimeString()}: {hour.temp_c}°C {getWeatherEmoji('Sunny')}</p>
+              <div className="forecast-card" key={index}>
+                <h4>{new Date(hour.time).toLocaleTimeString()}</h4>
+                <p>{hour.temp_c}°C</p>
+                <p>{getWeatherEmoji('Sunny')}</p>
               </div>
             ))}
             {view === 'weekly' && forecast.map((day, index) => (
-              <div className="card" key={index}>
-                <p>{new Date(day.date).toLocaleDateString()}: {day.day && day.day.avgtemp_c}°C {getWeatherEmoji('Sunny')}</p>
+              <div className="forecast-card" key={index}>
+                <h4>{new Date(day.date).toLocaleDateString()}</h4>
+                <p>{day.day && day.day.avgtemp_c}°C</p>
+                <p>{getWeatherEmoji('Sunny')}</p>
               </div>
             ))}
             {view === 'monthly' && forecast.map((day, index) => (
-              <div className="card" key={index}>
-                <p>{new Date(day.date).toLocaleDateString()}: {day.day && day.day.avgtemp_c}°C {getWeatherEmoji('Sunny')}</p>
+              <div className="forecast-card" key={index}>
+                <h4>{new Date(day.date).toLocaleDateString()}</h4>
+                <p>{day.day && day.day.avgtemp_c}°C</p>
+                <p>{getWeatherEmoji('Sunny')}</p>
               </div>
             ))}
           </div>
