@@ -7,29 +7,26 @@ import Navbar from './Components/Navbar';
 import Settings from './Components/Settings';
 import './App.css';
 
+
 const App = () => {
   const [savedLocations, setSavedLocations] = useState([]);
+  const [isDarkMode, setIsDarkMode] = useState(false);
+
+  const toggleDarkMode = () => {
+    setIsDarkMode(!isDarkMode);
+  };
 
   return (
-    <Router>
-      <div>
+    <div className={isDarkMode ? 'app dark-mode' : 'app'}>
+      <Router>
         <Navbar />
         <Routes>
-          <Route
-            path="/"
-            element={<Home savedLocations={savedLocations} setSavedLocations={setSavedLocations} />}
-          />
-          <Route
-            path="/saved-locations"
-            element={<SavedLocations savedLocations={savedLocations} setSavedLocations={setSavedLocations} />}
-          />
-          <Route
-            path="/settings"
-            element={<Settings />}
-          />
+          <Route path="/" element={<Home savedLocations={savedLocations} setSavedLocations={setSavedLocations} />} />
+          <Route path="/saved" element={<SavedLocations savedLocations={savedLocations} setSavedLocations={setSavedLocations} />} />
+          <Route path="/settings" element={<Settings isDarkMode={isDarkMode} toggleDarkMode={toggleDarkMode} />} />
         </Routes>
-      </div>
-    </Router>
+      </Router>
+    </div>
   );
 };
 

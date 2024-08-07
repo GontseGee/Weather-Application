@@ -1,32 +1,55 @@
-body {
-  margin: 0;
-  font-family: Arial, sans-serif;
+
+/* App.css */
+:root {
+  --bg-color: #f0f0f0;
+  --text-color: #000;
+  --border-color: #ddd;
+  --button-bg: #007bff;
+  --button-text: #fff;
+}
+
+.dark-mode {
+  --bg-color: #1c1c1c;
+  --text-color: #fff;
+  --border-color: #444;
+  --button-bg: #555;
+  --button-text: #fff;
 }
 
 .app {
-  padding: 20px;
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  min-height: 100vh;
+  transition: background-color 0.3s, color 0.3s;
 }
 
 button {
-  margin: 10px;
-  padding: 10px;
-  border: none;
-  border-radius: 5px;
+  background-color: var(--button-bg);
+  color: var(--button-text);
+  border: 1px solid var(--border-color);
+  padding: 0.5em 1em;
   cursor: pointer;
+  transition: background-color 0.3s, color 0.3s;
 }
 
-/* Dark Mode Styles */
-.dark-mode {
-  background-color: #121212;
-  color: #e0e0e0;
+button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
 }
 
-.dark-mode .card {
-  background-color: #1f1f1f;
-  color: #e0e0e0;
+/* Add more specific styles for Home and SavedLocations */
+.home, .saved-locations {
+  padding: 1em;
 }
 
-.dark-mode button {
-  background-color: #333;
-  color: #e0e0e0;
+.search-container, .view-buttons, .locations-list {
+  margin-bottom: 1em;
+}
+
+.card, .location-card {
+  background-color: var(--bg-color);
+  border: 1px solid var(--border-color);
+  padding: 1em;
+  margin-bottom: 1em;
+  transition: background-color 0.3s, border-color 0.3s;
 }
