@@ -11,7 +11,6 @@ const weatherEmojis = {
 };
 
 const Home = ({ savedLocations, setSavedLocations }) => {
-  // All other code should follow after imports
   const [weather, setWeather] = useState(null);
   const [forecast, setForecast] = useState(null);
   const [searchTerm, setSearchTerm] = useState('');
@@ -19,11 +18,11 @@ const Home = ({ savedLocations, setSavedLocations }) => {
   const [error, setError] = useState(null);
   const [view, setView] = useState('current');
   const [notification, setNotification] = useState('');
+  const [isCelsius, setIsCelsius] = useState(true);
 
   useEffect(() => {
     const saved = JSON.parse(localStorage.getItem('savedLocations'));
     if (saved) {
-      console.log('Loaded saved locations:', saved);
       setSavedLocations(saved);
     }
   }, [setSavedLocations]);
@@ -34,7 +33,7 @@ const Home = ({ savedLocations, setSavedLocations }) => {
     try {
       const weatherData = await fetchWeather(searchTerm);
       setWeather(weatherData);
-      const forecastData = await fetchHourlyForecast(searchTerm); 
+      const forecastData = await fetchHourlyForecast(searchTerm);
       setForecast(forecastData);
     } catch (error) {
       setError('Failed to fetch weather data.');
@@ -44,21 +43,14 @@ const Home = ({ savedLocations, setSavedLocations }) => {
   };
 
   const handleSave = () => {
-    console.log('Weather data:', weather);
-    console.log('Search term:', searchTerm);
-    console.log('Saved locations:', savedLocations);
-  
     if (
       weather &&
       searchTerm &&
       typeof searchTerm === 'string' &&
       typeof weather.current?.temp_c === 'number'
     ) {
-      const locationExists = savedLocations.some((loc) => {
-        console.log('Checking location:', loc);
-        return typeof loc.name === 'string' && loc.name.toLowerCase() === searchTerm.toLowerCase();
-      });
-  
+      const locationExists = savedLocations.some((loc) => loc.name.toLowerCase() === searchTerm.toLowerCase());
+
       if (!locationExists) {
         const newSavedLocations = [
           ...savedLocations,
@@ -73,7 +65,7 @@ const Home = ({ savedLocations, setSavedLocations }) => {
             },
           },
         ];
-  
+
         setSavedLocations(newSavedLocations);
         localStorage.setItem('savedLocations', JSON.stringify(newSavedLocations));
         setNotification(`Location ${searchTerm} saved to Saved Locations.`);
@@ -87,7 +79,7 @@ const Home = ({ savedLocations, setSavedLocations }) => {
       setError('Location is already saved or weather data is missing.');
     }
   };
-  
+
   const handleDelete = (name) => {
     const newSavedLocations = savedLocations.filter((location) => location.name !== name);
     setSavedLocations(newSavedLocations);
@@ -138,6 +130,15 @@ const Home = ({ savedLocations, setSavedLocations }) => {
     }
   };
 
+  const toFahrenheit = (celsius) => (celsius * 9/5) + 32;
+  const formatTemperature = (temp) => {
+    return isCelsius ? `${temp}°C` : `${toFahrenheit(temp).toFixed(1)}°F`;
+  };
+
+  const toggleTemperatureUnit = () => {
+    setIsCelsius(!isCelsius);
+  };
+
   return (
     <div>
       <h1>Weather Information</h1>
@@ -155,6 +156,11 @@ const Home = ({ savedLocations, setSavedLocations }) => {
           Save
         </button>
       </div>
+      <div className="temperature-toggle">
+        <button onClick={toggleTemperatureUnit}>
+          Switch to {isCelsius ? 'Fahrenheit' : 'Celsius'}
+        </button>
+      </div>
       {notification && <div className="notification">{notification}</div>}
       <div className="view-buttons">
         <button onClick={() => handleViewChange('current')}>Current</button>
@@ -162,11 +168,11 @@ const Home = ({ savedLocations, setSavedLocations }) => {
         <button onClick={() => handleViewChange('weekly')}>Weekly</button>
         <button onClick={() => handleViewChange('monthly')}>Monthly</button>
       </div>
-      {error && <p>{error}</p>}
+      {error && <p className="error">{error}</p>}
       {weather && view === 'current' && weather.current && (
         <div className="card">
           <h2>Current Weather</h2>
-          <p>{getWeatherEmoji('Sunny')} Temperature: {weather.current.temp_c}°C</p>
+          <p>{getWeatherEmoji('Sunny')} Temperature: {formatTemperature(weather.current.temp_c)}</p>
           <p>{getWeatherEmoji('Humidity')} Humidity: {weather.current.humidity}%</p>
           <p>{getWeatherEmoji('Wind')} Wind Speed: {weather.current.wind_kph} kph</p>
         </div>
@@ -178,21 +184,21 @@ const Home = ({ savedLocations, setSavedLocations }) => {
             {view === 'hourly' && forecast.map((hour, index) => (
               <div className="forecast-card" key={index}>
                 <h4>{new Date(hour.time).toLocaleTimeString()}</h4>
-                <p>{hour.temp_c}°C</p>
+                <p>{formatTemperature(hour.temp_c)}</p>
                 <p>{getWeatherEmoji('Sunny')}</p>
               </div>
             ))}
             {view === 'weekly' && forecast.map((day, index) => (
               <div className="forecast-card" key={index}>
                 <h4>{new Date(day.date).toLocaleDateString()}</h4>
-                <p>{day.day && day.day.avgtemp_c}°C</p>
+                <p>{formatTemperature(day.day && day.day.avgtemp_c)}</p>
                 <p>{getWeatherEmoji('Sunny')}</p>
               </div>
             ))}
             {view === 'monthly' && forecast.map((day, index) => (
               <div className="forecast-card" key={index}>
                 <h4>{new Date(day.date).toLocaleDateString()}</h4>
-                <p>{day.day && day.day.avgtemp_c}°C</p>
+                <p>{formatTemperature(day.day && day.day.avgtemp_c)}</p>
                 <p>{getWeatherEmoji('Sunny')}</p>
               </div>
             ))}
@@ -206,7 +212,7 @@ const Home = ({ savedLocations, setSavedLocations }) => {
             location.weather && location.weather.current ? (
               <div key={index} className="weather-card">
                 <h3>{location.name}</h3>
-                <p>{getWeatherEmoji('Sunny')} Temperature: {location.weather.current.temp_c}°C</p>
+                <p>{getWeatherEmoji('Sunny')} Temperature: {formatTemperature(location.weather.current.temp_c)}</p>
                 <p>{getWeatherEmoji('Humidity')} Humidity: {location.weather.current.humidity}%</p>
                 <p>{getWeatherEmoji('Wind')} Wind Speed: {location.weather.current.wind_kph} kph</p>
                 <button onClick={() => handleDelete(location.name)}>Delete</button>
