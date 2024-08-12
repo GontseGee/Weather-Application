@@ -1,63 +1,61 @@
-/* Navbar.css */
-
-/* Base styling for the navbar */
 .navbar {
-  background-color: #333; /* Dark background for the navbar */
-  padding: 10px 120px; /* Padding around the navbar */
-  display: flex; /* Use flexbox to align items horizontally */
-  justify-content: center; /* Center items horizontally */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #333;
+  padding: 0 20px;
+  height: 60px;
+  width: 100%;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1000;
 }
 
 .navbar-list {
-  list-style: none; /* Remove default list styling */
-  padding: 0; /* Remove default padding */
-  margin: 0; /* Remove default margin */
-  display: flex; /* Display list items inline */
+  display: flex;
+  list-style: none;
+  margin: 0;
+  padding: 0;
 }
 
 .navbar-item {
-  margin: 0 15px; /* Add space between items */
+  margin: 0 15px;
 }
 
 .navbar-item a {
-  text-decoration: none; /* Remove underline from links */
-  color: #fff; /* White text color */
-  font-size: 70px; /* Set font size */
-  font-weight: 500; /* Set font weight */
-  transition: color 0.3s; /* Smooth transition for hover effect */
+  color: white;
+  text-decoration: none;
+  font-size: 18px;
+  padding: 14px 0;
+  display: block;
 }
 
 .navbar-item a:hover {
-  color: rgb(29, 106, 168); /* Change text color on hover */
+  text-decoration: underline;
+  background-color: rgba(255, 255, 255, 0.1);
+  border-radius: 4px;
 }
 
-/* Responsive styling */
 @media (max-width: 768px) {
   .navbar {
-    flex-direction: column; /* Stack items vertically */
-    align-items: center; /* Center items horizontally */
+    height: auto;
+    padding: 10px;
+    flex-direction: column;
+    align-items: flex-start;
   }
 
   .navbar-list {
-    flex-direction: column; /* Stack list items vertically */
-    margin-top: 10px; /* Add space between navbar and list */
+    flex-direction: column;
+    width: 100%;
   }
 
   .navbar-item {
-    margin: 10px 0; /* Add vertical space between items */
+    margin: 10px 0;
   }
 
   .navbar-item a {
-    font-size: 10px; /* Increase font size for better readability on smaller screens */
-  }
-}
-
-@media (max-width: 480px) {
-  .navbar {
-    padding: 10px 15px; /* Adjust padding for smaller screens */
-  }
-
-  .navbar-item a {
-    font-size: 16px; /* Adjust font size for very small screens */
+    padding: 10px 15px;
   }
 }
