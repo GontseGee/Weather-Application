@@ -1,38 +1,25 @@
-Initialize App:
-Create main screen with:
-Search bar for city input
-Display area for current weather conditions
-Display area for weather forecast
-Loading indicator
-Error message display
-Set default units (e.g., Celsius)
-Load saved locations (if applicable)
-Event Handlers:
+Start
+    InitializeApp()
+    CreateMainScreen()
+    CreateCityInputField()
+    CreateWeatherDisplayArea()
 
-On city search:
-Clear previous data
-Display loading indicator
-Call weather API with city name
-Handle API response:
-If successful:
-Extract relevant data (current conditions, forecast, etc.)
-Convert units if necessary
-Update UI with weather data
-Hide loading indicator
+    OnCitySubmit()
+        CallWeatherAPI()
+        If APIResponseSuccessful()
+            ExtractWeatherData()
+            DisplayCurrentWeather()
+            DisplayTemperature()
+            DisplayWeatherForecast()
+        Else
+            DisplayErrorMessage()
+        EndIf
+    EndIf
 
-If error:
-Display error message
-Hide loading indicator
-On unit change:
-Convert displayed temperatures
+    // Optional features
+    CreateSettingsScreen()
+    AllowTemperatureUnitSelection()
+    AllowLocationSaving()
+    ImplementWeatherAlerts()
 
-On location save/delete:
-Update saved locations list
-Implement a system to check for weather alerts based on user location or selected city.
-Display alerts prominently if available.
-Allow users to customize alert preferences.
-Retrieve hourly forecast data from API.
-Display hourly data in a scrollable or tabular format.
-
-Allow users to customize the app's appearance (themes,dark and light)  
-
+End
