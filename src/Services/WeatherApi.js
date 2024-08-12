@@ -17,8 +17,7 @@ export const fetchWeather = async (location) => {
   };
   
   export const fetchMonthlyForecast = async (location) => {
-    // Note: WeatherAPI.com does not provide a direct endpoint for monthly forecasts.
-    // This is a placeholder for any custom implementation if needed.
+  
     const response = await axios.get(`https://api.weatherapi.com/v1/forecast.json?key=${API_KEY}&q=${location}&days=30`);
     return response.data.forecast.forecastday;
   };

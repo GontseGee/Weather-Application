@@ -1,4 +1,4 @@
-/* src/Components/Home.css */
+
 .search-container {
   display: flex;
   justify-content: center;
@@ -97,7 +97,7 @@
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  gap: 10px; /* Space between forecast cards */
+  gap: 10px; 
 }
 
 .forecast-card {
