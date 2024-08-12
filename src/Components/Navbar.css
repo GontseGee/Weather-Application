@@ -1,27 +1,63 @@
+/* Navbar.css */
 
+/* Base styling for the navbar */
 .navbar {
-    background-color: #1c85a0;
-    padding: 1rem;
+  background-color: #333; /* Dark background for the navbar */
+  padding: 10px 120px; /* Padding around the navbar */
+  display: flex; /* Use flexbox to align items horizontally */
+  justify-content: center; /* Center items horizontally */
+}
+
+.navbar-list {
+  list-style: none; /* Remove default list styling */
+  padding: 0; /* Remove default padding */
+  margin: 0; /* Remove default margin */
+  display: flex; /* Display list items inline */
+}
+
+.navbar-item {
+  margin: 0 15px; /* Add space between items */
+}
+
+.navbar-item a {
+  text-decoration: none; /* Remove underline from links */
+  color: #fff; /* White text color */
+  font-size: 70px; /* Set font size */
+  font-weight: 500; /* Set font weight */
+  transition: color 0.3s; /* Smooth transition for hover effect */
+}
+
+.navbar-item a:hover {
+  color: rgb(29, 106, 168); /* Change text color on hover */
+}
+
+/* Responsive styling */
+@media (max-width: 768px) {
+  .navbar {
+    flex-direction: column; /* Stack items vertically */
+    align-items: center; /* Center items horizontally */
   }
-  
+
   .navbar-list {
-    display: flex;
-    list-style: none;
-    padding: 0;
-    margin: 0;
+    flex-direction: column; /* Stack list items vertically */
+    margin-top: 10px; /* Add space between navbar and list */
   }
-  
+
   .navbar-item {
-    margin-right: 1rem;
+    margin: 10px 0; /* Add vertical space between items */
   }
-  
+
   .navbar-item a {
-    color: rgb(255, 255, 255);
-    text-decoration: none;
-    font-weight: bold;
+    font-size: 10px; /* Increase font size for better readability on smaller screens */
   }
-  
-  .navbar-item a:hover {
-    text-decoration: underline;
+}
+
+@media (max-width: 480px) {
+  .navbar {
+    padding: 10px 15px; /* Adjust padding for smaller screens */
   }
-  
+
+  .navbar-item a {
+    font-size: 16px; /* Adjust font size for very small screens */
+  }
+}

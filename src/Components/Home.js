@@ -1,7 +1,5 @@
-// src/Components/Home.js
 import React, { useState, useEffect } from 'react';
 import { fetchWeather, fetchHourlyForecast, fetchWeeklyForecast, fetchMonthlyForecast } from '../Services/WeatherApi';
-
 import './Home.css';
 
 const weatherEmojis = {
@@ -13,6 +11,7 @@ const weatherEmojis = {
 };
 
 const Home = ({ savedLocations, setSavedLocations }) => {
+  // All other code should follow after imports
   const [weather, setWeather] = useState(null);
   const [forecast, setForecast] = useState(null);
   const [searchTerm, setSearchTerm] = useState('');
@@ -45,36 +44,50 @@ const Home = ({ savedLocations, setSavedLocations }) => {
   };
 
   const handleSave = () => {
+    console.log('Weather data:', weather);
+    console.log('Search term:', searchTerm);
+    console.log('Saved locations:', savedLocations);
+  
     if (
       weather &&
       searchTerm &&
       typeof searchTerm === 'string' &&
-      !savedLocations.some((loc) => loc.name.toLowerCase() === searchTerm.toLowerCase())
+      typeof weather.current?.temp_c === 'number'
     ) {
-      const newSavedLocations = [
-        ...savedLocations,
-        {
-          name: searchTerm,
-          weather: {
-            current: {
-              temp_c: weather.current.temp_c,
-              humidity: weather.current.humidity,
-              wind_kph: weather.current.wind_kph,
+      const locationExists = savedLocations.some((loc) => {
+        console.log('Checking location:', loc);
+        return typeof loc.name === 'string' && loc.name.toLowerCase() === searchTerm.toLowerCase();
+      });
+  
+      if (!locationExists) {
+        const newSavedLocations = [
+          ...savedLocations,
+          {
+            name: searchTerm,
+            weather: {
+              current: {
+                temp_c: weather.current.temp_c,
+                humidity: weather.current.humidity,
+                wind_kph: weather.current.wind_kph,
+              },
             },
           },
-        },
-      ];
-      setSavedLocations(newSavedLocations);
-      localStorage.setItem('savedLocations', JSON.stringify(newSavedLocations));
-      setNotification(`Location ${searchTerm} saved to Saved Locations.`);
-      setTimeout(() => {
-        setNotification('');
-      }, 3000);
+        ];
+  
+        setSavedLocations(newSavedLocations);
+        localStorage.setItem('savedLocations', JSON.stringify(newSavedLocations));
+        setNotification(`Location ${searchTerm} saved to Saved Locations.`);
+        setTimeout(() => {
+          setNotification('');
+        }, 3000);
+      } else {
+        setError('Location is already saved or weather data is missing.');
+      }
     } else {
       setError('Location is already saved or weather data is missing.');
     }
   };
-
+  
   const handleDelete = (name) => {
     const newSavedLocations = savedLocations.filter((location) => location.name !== name);
     setSavedLocations(newSavedLocations);

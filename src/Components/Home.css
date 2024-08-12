@@ -1,126 +1,131 @@
-
 .search-container {
   display: flex;
-  justify-content: center;
+  gap: 10px;
   margin-bottom: 20px;
+  justify-content: center;
 }
 
 .search-container input {
-  margin-right: 10px;
   padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
+  border-radius: 10px;
+  border: 1px solid var(--border-color);
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  width: 200px;
 }
 
-.search-container button {
-  padding: 10px;
-  border: none;
-  border-radius: 5px;
-  background-color: #007bff;
-  color: white;
-  cursor: pointer;
-}
-
-.search-container button:disabled {
-  background-color: #ccc;
-  cursor: not-allowed;
+.notification {
+  margin: 10px 0;
+  color: green;
+  font-weight: bold;
 }
 
 .view-buttons {
   display: flex;
-  justify-content: center;
+  gap: 10px;
   margin-bottom: 20px;
-}
-
-.view-buttons button {
-  margin: 0 5px;
-  padding: 10px;
-  border: none;
-  border-radius: 5px;
-  background-color: #007bff;
-  color: white;
-  cursor: pointer;
-}
-
-.view-buttons button:disabled {
-  background-color: #ccc;
-  cursor: not-allowed;
+  justify-content: center;
 }
 
 .card {
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  padding: 15px;
-  margin: 10px;
+  background-color: #2e2e2e;
+  color: white;
+  padding: 20px;
+  border-radius: 15px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  transition: transform 0.3s;
   text-align: center;
-  background-color: white;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+}
+
+.forecast-container {
+  display: flex;
+  gap: 15px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.forecast-card {
+  background-color: #3b3b3b;
+  color: white;
+  padding: 10px;
+  border-radius: 10px;
+  flex: 1 1 100px;
+  text-align: center;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  transition: transform 0.3s;
+}
+
+.forecast-card:hover {
+  transform: scale(1.05);
 }
 
 .weather-card {
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  padding: 15px;
-  margin: 10px;
-  background-color: #f9f9f9;
+  background-color: #333;
+  color: white;
+  padding: 20px;
+  border-radius: 15px;
+  margin-bottom: 20px;
+  position: relative;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  text-align: center;
 }
 
 .weather-card h3 {
-  margin: 0;
+  margin-bottom: 10px;
+  font-size: 1.5rem;
 }
 
 .weather-card p {
   margin: 5px 0;
+  font-size: 1rem;
 }
 
 .weather-card button {
-  margin-top: 10px;
-  padding: 5px 10px;
-  border: none;
-  border-radius: 5px;
+  position: absolute;
+  top: 10px;
+  right: 10px;
   background-color: #ff4d4d;
   color: white;
+  border: none;
+  border-radius: 50%;
+  padding: 10px;
   cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.weather-card button:hover {
+  background-color: #ff1a1a;
 }
 
 .saved-locations {
-  margin-top: 20px;
+  width: 100%;
+  max-width: 600px;
+  margin: 0 auto;
 }
 
-.notification {
-  text-align: center;
-  margin-top: 10px;
-  color: green;
+@media (max-width: 768px) {
+  .card, .forecast-card, .weather-card {
+    padding: 15px;
+  }
+
+  .forecast-container {
+    flex-direction: column;
+    gap: 10px;
+  }
 }
 
+@media (max-width: 480px) {
+  .weather-card h3 {
+    font-size: 1.3rem;
+  }
 
-.forecast-container {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 10px; 
-}
-
-.forecast-card {
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  padding: 10px;
-  margin: 5px;
-  text-align: center;
-  background-color: #f9f9f9;
-  width: 120px; /* Set width for smaller cards */
-}
-
-.forecast-card h4 {
-  margin: 5px 0;
-  font-size: 14px; /* Smaller font size for titles */
-}
-
-.forecast-card p {
-  margin: 5px 0;
-  font-size: 12px; /* Smaller font size for text */
-}
-
-.forecast-card img {
-  width: 50px; /* Set width for weather icons */
-  height: auto;
+  .weather-card button {
+    top: 5px;
+    right: 5px;
+    padding: 7px;
+  }
 }
